@@ -1,4 +1,6 @@
 const SHA256 = require('crypto-js/sha256'); //looks in the node_modules folder for the library
+const { v4: uuidv4 } = require('uuid'); //for details review https://www.npmjs.com/package/uuid
+
 
 
 class Block {
@@ -13,12 +15,6 @@ class Block {
     
     //we also need to include a hash for this block
     this.hash = this.calculatehash(); //lets execute our hash function and store the function
-
-    //use this to test first coin value
-    //console.log ("ts: " + this.ts );
-    //console.log ("transaction: " + this.transaction.amount );
-    //console.log ("phash: " + this.phash );
-    
   }
   
   calculatehash() {
@@ -26,6 +22,74 @@ class Block {
     let hash = SHA256( this.ts + JSON.stringify(this.transaction) + this.phash ); //this creates an object
     return hash.toString(); //lets return a string rather than an object
   }
+
+  isdatevalid(){
+    const  date=new Date(this.ts);
+    return date instanceof Date && !isNaN(date.valueOf());
+     
+  }
+  validtransaction() {
+    //check transaction has either a credit or debit property
+    if(!(this.transaction.hasOwnProperty('credit') || this.transaction.hasOwnProperty('debit')) ){
+      return false; //wasn't able to find either a credit or debit property
+    }
+    
+    // [abc] = range either a, b, c
+    // * = 0 or more instances
+    // + = 1 or more instances
+    // ? = 0 or 1 instance
+    // \ = escape following character
+    let regex_pattern = /^[0-9]+\.?[0-9]$/; //https://cheatography.com/davechild/cheat-sheets/regular-expressions/
+
+    if(this.transaction.hasOwnProperty('credit')) { //if we have a credit property
+      if(!(regex_pattern.test( this.transaction.credit )  )) { //credit value is not a number
+        return false; //not a valid transaction
+      } else {
+        this.transaction.credit = Number(this.transaction.credit); //convert to number
+      }
+    }
+
+    if(this.transaction.hasOwnProperty('debit')) { //if we have a debit property
+      if(!(regex_pattern.test( this.transaction.debit )  )) { //debit value is not a number
+        return false; //not a valid transaction
+      } else {
+        this.transaction.debit = Number(this.transaction.debit); //convert to number
+      }
+    }
+    
+    //check the transation has a tid property
+    if(!this.transaction.hasOwnProperty('tid') ){
+      return false; //wasn't able to find a tid property
+    }
+    
+    return true;
+  }
+
+  get tid() { //return the tid - fyi, 'get' creates a property (rather than a function)
+    return this.transaction.tid;
+  }
+ get timestamp(){
+      if(this.isdatevalid()){
+        return new Date(this.ts);
+      }else{
+        return new Date(2100,11,11);
+      }
+ }
+  
+  get creditvalue() { //return the credit value property
+    if(this.transaction.credit === undefined ) {
+      return 0;
+    }
+    return this.transaction.credit;
+  }
+
+  get debitvalue() { //return the debit value property
+    if(this.transaction.debit === undefined ) {
+      return 0;
+    }    
+    return this.transaction.debit;
+  }
+  
 }
 
 
@@ -50,8 +114,13 @@ class Chain {
     //1, get the hash of the previous block and add that at this new blocks previous hash
     newblock.phash = this.lastblock().hash;
     newblock.hash = newblock.calculatehash(); //calculate the hash value for the newblock
-    
-    this.chain.push(newblock); //add the new block to the chain - not normally this simple in 'real-life'
+
+			console.log("a")
+    	this.chain.push(newblock); //add the new block to the chain - not normally this simple in 'real-life'
+			return true;
+		}
+		console.log("b")
+		return false;
   }
 
   isvalid() {
@@ -71,35 +140,36 @@ class Chain {
     }
     //if we have iterated through the entire chain we should be all good
     return true;
-    
-  }  
+  }
+
+  balance() {
+    //we need to iterated through the entire chain and incorporate the values of each transaction
+    let value = 0;
+
+    return value;
+  }
+  
 }
 
+ let today= new Date();
+     let futureDate=new Date(today);
+     futureDate.setDate(futureDate.getDate()+1);
+   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>today is:'+new Intl.DateTimeFormat('en-GB').format(today) );
+     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>tomorrow is:'+new Intl.DateTimeFormat('en-GB').format(futureDate) );
+let newBlock = new Block('2020/1/1', { debit: '111110', tid: 'aaa'} );
+console.log('valid transation: '+ newBlock.validtransaction());
+console.log('tid: '+ newBlock.tid);
+console.log('debit value: '+ newBlock.debitvalue);
+console.log('credit value: '+ newBlock.creditvalue);
+console.log('new block with date 31/2/2020 wrong datew');
 
-//let adacoin = new Block();
-//console.log(adacoin.calculatehash())
+let newBlockDate = new Block('31/2/2020', { debit: -466, tid: 'aaa'} );
+console.log('Compilers see the date:'+new Intl.DateTimeFormat('en-GB').format(newBlockDate.timestamp) );
+console.log('is date valid: '+newBlockDate.isdatevalid());
 
-//adacoin = new Chain();
-//console.log(adacoin.genesisblock())
 
-adacoin = new Chain();
-adacoin.addblock( new Block("19/01/2022", { amount: 10 } ) );
-
-//add some additional tests
-adacoin.addblock( new Block("20/01/2022", { amount: 83 } ) );
-
-//console.log(JSON.stringify (adacoin) );
-//console.log(JSON.stringify (adacoin, null, 4) );
-
-console.log(adacoin.isvalid());
-
-//lets do some hacking - lets try to override an amount being transfered
-adacoin.chain[1].data = { amount: 200 };
-
-//what about if we try to recalculate the hash?
-adacoin.chain[1].hash = adacoin.chain[1].calculatehash();
-
-console.log(adacoin.isvalid());
+let adaCoin = new Chain();
+adaCoin.addblock( new Block("19/01/2022", { credit: 10, tid: 'A001' } ) );
+console.log( adaCoin );
  
-
 module.exports = { Block, Chain }; // this allows the classes to be exported

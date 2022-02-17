@@ -15,7 +15,16 @@
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
-    "npm": "^8.3.1"
+    "npm": "^8.3.1",
+    "uuid": "^8.3.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kasandrop/AdaCoin-Blockchain-Working-Version.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kasandrop/AdaCoin-Blockchain-Working-Version/issues"
+  },
+  "homepage": "https://github.com/kasandrop/AdaCoin-Blockchain-Working-Version#readme",
   "description": ""
 }
