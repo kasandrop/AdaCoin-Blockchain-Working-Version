@@ -165,26 +165,26 @@ describe('\n\n 2 Correctness of validtransaction()   method', () => {
     let block = new Block("19/01/2022", { debit: - 100.3, tid: 'aaa' });
     expect(block.validtransaction()).toBe(false);
   });
-   test('2.21  Transactions with missing id not allowed  for debit ', () => {
-    let block = new Block("19/01/2022", { debit: - 100.3});
+  test('2.21  Transactions with missing id not allowed  for debit ', () => {
+    let block = new Block("19/01/2022", { debit: - 100.3 });
     expect(block.validtransaction()).toBe(false);
   });
-   test('2.22  Transactions with missing id not allowed  for credit ', () => {
-    let block = new Block("19/01/2022", { credit:7.3});
+  test('2.22  Transactions with missing id not allowed  for credit ', () => {
+    let block = new Block("19/01/2022", { credit: 7.3 });
     expect(block.validtransaction()).toBe(false);
   });
-   test('2.23  Transactions with missing id and missing type  not allowed ', () => {
-    let block = new Block("19/01/2022", { });
+  test('2.23  Transactions with missing id and missing type  not allowed ', () => {
+    let block = new Block("19/01/2022", {});
     expect(block.validtransaction()).toBe(false);
   });
-   test('2.24  Transactions with  missing type  not allowed ', () => {
-    let block = new Block("19/01/2022", {tid: 'aaa' });
+  test('2.24  Transactions with  missing type  not allowed ', () => {
+    let block = new Block("19/01/2022", { tid: 'aaa' });
     expect(block.validtransaction()).toBe(false);
-   });
+  });
 });
-  
-describe('\n\n 3 Correctness of the block ',()=>{
-   test('3.1   Transaction with future dates should be rejected for credit tomorrow', () => {
+
+describe('\n\n 3 Correctness of the block ', () => {
+  test('3.1   Transaction with future dates should be rejected for credit tomorrow', () => {
 
     let today = new Date();
     let futureDate = new Date(today);
@@ -228,43 +228,119 @@ describe('\n\n 3 Correctness of the block ',()=>{
   });
 });
 
+//Decision table testing to have all possible combination
 
-describe('\n\n 3 Reliability and robustness of helper method isdatevalid', () => {
+describe('\n\n 4 Correctness of Chain class', () => {
 
-  test('3.1 today day is  valid', () => {
-    let today = new Date();
-    new Block(new Intl.DateFormat('en-GB').format(today));
-    expect(adacoin.isvalid()).toBe(true);
-  });
-  test('3.2 yesterday  day is  valid', () => {
-    let today = new Date();
-    let yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    new Block(new Intl.DateFormat('en-GB').format(yesterday));
-    expect(adacoin.isvalid()).toBe(true);
+  test('4.1 Block with existing uuid will not be added to the chain addblock method tested debit debit ', () => {
+    let block = new Block('2020/1/1', { debit: -310, tid: 'aaa' });
+    let newBlock = new Block('2020/1/1', { debit: -36.66, tid: 'aaa' });
+    let adaChain = new Chain();
+    adaChain.addBlock(block);
+    let result = adaChain.adBlock(newBlock);
+    expect(result).toBe(false);
   });
 
-  test('3.3 Tomorrow date is invalid', () => {
-    let today = new Date();
-    let tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    let block = new Block(new Intl.DateTimeFormat('en-GB').format(tomorrow), { credit: 100.13, tid: 'aaa' });
-    expect(block.validtransaction()).toBe(false);
-
+  test('4.2 Block with existing uuid will not be added to the chain addblock method tested debit credit', () => {
+    let block = new Block('2020/1/1', { debit: -190, tid: 'aaabb' });
+    let newBlock = new Block('2020/1/1', { credit: 99.66, tid: 'aaabb' });
+    let adaChain = new Chain();
+    adaChain.addBlock(block);
+    let result = adaChain.adBlock(newBlock);
+    expect(result).toBe(false);
   });
 
-  test('3.4 When Date is missing then  invalid result', () => {
-    let block = new Block({ credit: 10.13, tid: 'ayaa' });
-    expect(block.validtransaction()).toBe(false);
-  });
-  test('3.5 When Date is wrong   "31/2/2000" then  invalid result', () => {
-    let block = new Block("31/2/2000", { credit: 10.13, tid: 'ayaa' });
-    expect(block.validtransaction()).toBe(false);
-  });
-  test('3.5 When Date is malformed   "546/rrtyuv0" then  invalid result', () => {
-    let block = new Block("546/rrtyuv0", { credit: 10.13, tid: 'ayaa' });
-    expect(block.validtransaction()).toBe(false);
+  test('4.3 Block with existing uuid will not be added to the chain addblock method tested credit debit ', () => {
+    let block = new Block('2020/1/1', { credit: 810, tid: 'bbaaa' });
+    let newBlock = new Block('2020/1/1', { debit: -76.66, tid: 'bbaaa' });
+    let adaChain = new Chain();
+    adaChain.addBlock(block);
+    let result = adaChain.adBlock(newBlock);
+    expect(result).toBe(false);
   });
 
-})
+  test('4.4 Block with existing uuid will not be added to the chain addblock method tested credit credit ', () => {
+    let block = new Block('2020/1/1', { credit: 8, tid: 'aeraa45' });
+    let newBlock = new Block('2020/1/1', { credit: 56.66, tid: 'aeraa45' });
+    let adaChain = new Chain();
+    adaChain.addBlock(block);
+    let result = adaChain.adBlock(newBlock);
+    expect(result).toBe(false);
+  });
+
+
+
+
+  test('4.5 Block with unique uuid will   be added to the chain addblock method tested debit debit ', () => {
+    let block = new Block('2020/1/1', { debit: -310, tid: 'a66' });
+    let newBlock = new Block('2020/1/1', { debit: -36.66, tid: 'aaa66' });
+    let adaChain = new Chain();
+    adaChain.addBlock(block);
+    let result = adaChain.adBlock(newBlock);
+    expect(result).toBe(true);
+  });
+
+  test('4.6 Block with unique uuid will  be added to the chain addblock method tested debit credit', () => {
+    let block = new Block('2020/1/1', { debit: -190, tid: 'aay7b7b' });
+    let newBlock = new Block('2020/1/1', { credit: 99.66, tid: 'aaay7bb' });
+    let adaChain = new Chain();
+    adaChain.addBlock(block);
+    let result = adaChain.adBlock(newBlock);
+    expect(result).toBe(true);
+  });
+
+  test('4.7 Block with unique uuid will   be added to the chain addblock method tested credit debit ', () => {
+    let block = new Block('2020/1/1', { credit: 810, tid: '12b6ba' });
+    let newBlock = new Block('2020/1/1', { debit: -76.66, tid: '12bbaaa' });
+    let adaChain = new Chain();
+    adaChain.addBlock(block);
+    let result = adaChain.adBlock(newBlock);
+    expect(result).toBe(true);
+  });
+
+  test('4.8 Block with unique uuid will be added to the chain addblock method tested credit credit ', () => {
+    let block = new Block('2020/1/1', { credit: 8, tid: 'aera' });
+    let newBlock = new Block('2020/1/1', { credit: 56.66, tid: 'aeraa9' });
+    let adaChain = new Chain();
+    adaChain.addBlock(block);
+    let result = adaChain.adBlock(newBlock);
+    expect(result).toBe(true);
+  });
+
+});
+
+//reliability
+describe('\n\n 5 System testing. Overal functionality. Trying to break functionality providing acceptable data', () => {
+  let adaChain ;
+  beforeEach(()=>{
+    adaChain=new Chain();
+    let block =  new Block('1/1/2020',  {credit: 81.17, tid: '912b6ba' });
+    let block2 = new Block('1/2/2020', { debit: -76.66,  tid: '812bbaaa' });
+    let block3 = new Block('1/4/2020', { debit: -176.66, tid: '712bbaaa' });
+    let block4 = new Block('1/5/2020', { credit: 810.97, tid: '612b6ba' });
+    let block5 = new Block('1/1/2021', { debit: -576.36, tid: '512bbaaa' });
+    let block6 = new Block('4/2/2022', { debit: -716.16, tid: '412bbaaa' });
+    
+    adaChain.addblock(block);
+    adaChain.addblock(block2);
+    adaChain.addblock(block3);
+    adaChain.addblock(block4);
+    adaChain.addblock(block5);
+    adaChain.addblock(block6);
+
+    
+  });
+  test('5.1 Valid blocks in the chain isvalid function should return true', () => {
+    expect(adaChain.isvalid()).toBe(true);
+  });
+  test('5.2 Changing   value  in the 1st added Block. Let\'s make a million   ', () => {
+   let tamperedBlock= adaChain.chain[1];
+    tamperedBlock.transaction.credit=1000000;
+      expect(adaChain.isvalid()).toBe(true);
+  });
+ test('5.2 Changing   value  in the last added Block. Another way Let\'s make a  hundret  ', () => {
+   let tamperedBlock= adaChain.lastblock().transaction.debit=-616;
+      expect(adaChain.isvalid()).toBe(true);
+  });
+  
+});
