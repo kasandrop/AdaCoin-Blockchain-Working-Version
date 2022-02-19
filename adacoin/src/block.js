@@ -79,9 +79,9 @@ class Block {
   isValidTransactionProperties() {
     console.log('isValidTransactionProperties()');
     // check transaction has either a credit or debit property
-    if ((this.transaction.hasOwnProperty('credit')!== undefined  &&  this.transaction.hasOwnProperty('debit')!== undefined) ||
-       (this.transaction.hasOwnProperty('credit')=== undefined  &&  this.transaction.hasOwnProperty('debit')=== undefined) 
-       ){
+    if ((!this.transaction.hasOwnProperty('credit')  &&  !this.transaction.hasOwnProperty('debit')) ||
+       (this.transaction.hasOwnProperty('credit') &&  this.transaction.hasOwnProperty('debit')) )
+      {
       return false;
     }else{
       return true;

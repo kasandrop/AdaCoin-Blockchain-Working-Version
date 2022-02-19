@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">64.28% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/28</span>
+                <span class='fraction'>18/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>5/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44% </span>
+                <span class="strong">68% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/25</span>
+                <span class='fraction'>17/25</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -160,7 +160,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">34x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,21 +169,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -229,9 +229,9 @@ const {Block} =require ('./block.js');
     newBlock.phash = this.lastBlock().hash;
     newBlock.hash = newBlock.calculateHash(); //calculate the hash value for the newblock
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (newBlock.validTransaction()) {
+    if (newBlock.validTransaction()) {
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      this.chain.push(newBlock); </span>//add the new block to the chain - not normally this simple in 'real-life'
+      this.chain.push(newBlock); //add the new block to the chain - not normally this simple in 'real-life'
 &nbsp;
     }
 &nbsp;
@@ -241,15 +241,15 @@ const {Block} =require ('./block.js');
   isValid() {
     //returns true or false depending on whether the enire chain is valid
     for (let b = 1; b &lt; this.chain.length; b++) { // 0 = genesis
-      const current = <span class="cstat-no" title="statement not covered" >this.chain[b];</span> //the current block being iterated
-      const previous = <span class="cstat-no" title="statement not covered" >this.chain[b - 1];</span> // the previous iterated block
+      const current = this.chain[b]; //the current block being iterated
+      const previous = this.chain[b - 1]; // the previous iterated block
 &nbsp;
       //check the block hashes
-<span class="cstat-no" title="statement not covered" >      if (current.hash !== current.calculateHash()) { // is the current block hash incorrect?</span>
-<span class="cstat-no" title="statement not covered" >        return false;</span>
+      if (current.hash !== current.calculateHash()) { // is the current block hash incorrect?
+        return false;
       }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (current.phash !== previous.hash) { // is the current previous hash not the same as the previous hash?</span>
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (current.phash !== previous.hash) { // is the current previous hash not the same as the previous hash?
 <span class="cstat-no" title="statement not covered" >        return false;</span>
       }
     }
@@ -283,7 +283,7 @@ module.exports = { Chain }; // this allows the classes to be exported</pre></td>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat Feb 19 2022 23:28:58 GMT+0000 (Coordinated Universal Time)
+                at Sat Feb 19 2022 23:49:43 GMT+0000 (Coordinated Universal Time)
             </div>
         <script src="prettify.js"></script>
         <script>

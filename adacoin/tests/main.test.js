@@ -62,7 +62,7 @@ describe('\n\n 0 Checking if  the float variable can hold    money properly', ()
     expect(price1+ price2).toBe(2.04);
   });
 });
-
+describe('\n\n *** !UNIT TESTS', () => {
 
 describe('\n\n 2 Correctness and reliability of validTransaction()   method', () => {
 
@@ -205,6 +205,11 @@ describe('\n\n 2 Correctness and reliability of validTransaction()   method', ()
     expect(block.validTransaction()).toBe(false);
   });
 });
+
+
+});
+
+  
 
 describe('\n\n 3 Correctness of the block ', () => {
 
