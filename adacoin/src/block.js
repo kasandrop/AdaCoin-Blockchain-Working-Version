@@ -29,25 +29,30 @@ class Block {
   //added helper function
   isDateValid() {
     console.log('isDateValid()');
-    let isCorrectDate = new Date(this.ts).toString !== "Invalid Date";
-    if (isCorrectDate === false) {
+    if (typeof this.ts !== 'string') {
       return false;
     }
-    return true;
+
+
+    let isNotCorrectDate = new Date(this.ts).toString() === "Invalid Date";
+    if (isNotCorrectDate === true) {
+      return false;
+    }
+    return this.isNotDateFromFuture();
   }
 
 
 
 
-  isDateFromFuture() {
+  isNotDateFromFuture() {
     console.log('isDateFromFuture()');
     let mydate = new Date(this.ts);
     let mytoday = new Date();
     let difference = mydate - mytoday;
     if (difference > 0) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 
 
@@ -72,18 +77,18 @@ class Block {
     }
     return this.transaction.debit;
   }
-  toString() {
-    return JSON.stringify(this, null, l, 4);
-  }
+  
 
   isValidTransactionProperties() {
     console.log('isValidTransactionProperties()');
+    // if(!this.hasOwnProperty('transaction')){
+    //   return false;
+    // }
     // check transaction has either a credit or debit property
-    if ((!this.transaction.hasOwnProperty('credit')  &&  !this.transaction.hasOwnProperty('debit')) ||
-       (this.transaction.hasOwnProperty('credit') &&  this.transaction.hasOwnProperty('debit')) )
-      {
+    if (  (this.transaction.hasOwnProperty('credit') && this.transaction.hasOwnProperty('debit')) ||
+      (!this.transaction.hasOwnProperty('credit') && !this.transaction.hasOwnProperty('debit'))) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
@@ -124,7 +129,7 @@ class Block {
       Required feature nr 2- IMPLEMENTATION
    */
   validTransaction() {
-    if (this.isValidTransactionProperties() && this.isValidTransactionCriterias() && this.isDateValid() && this.isDateFromFuture()) {
+    if (this.isDateValid() && this.isValidTransactionProperties() && this.isValidTransactionCriterias()) {
       return true;
     }
     return false;
