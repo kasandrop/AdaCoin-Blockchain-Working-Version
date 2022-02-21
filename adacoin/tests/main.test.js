@@ -285,7 +285,7 @@ describe('negative,  positive test cases, error guessing ', () => {
   });
 
 });
-
+describe('\n\n 4 Integration tests   -4 -', () => {
 describe('\n\n 4 Correctness of the block ', () => {
   describe('Negative and positive test cases', () => {
     test('4.1  Today day is  valid', () => {
@@ -480,7 +480,7 @@ describe('\n\n 4 Correctness of the block ', () => {
 
   });
 
-
+ });
 
 });
 
@@ -588,12 +588,12 @@ describe('\n\n 5 - 6 - 7  Unit tests  of  Chain class white box testing', () => 
     test('6.1 Valid blocks in the chain isValid function should return true', () => {
       expect(adaChain.isValid()).toBe(true);
     });
-    test('6.2 Changing   value  in the 1st added Block. Let\'s make a million   ', () => {
+    test('6.2 Changing   value of transaction type in the 1st added Block will cause  function to return false \n \t\t\t (for example  in credit) ', () => {
       let tamperedBlock = adaChain.chain[1];
       tamperedBlock.transaction.credit = '1000000.00';
       expect(adaChain.isValid()).toBe(false);
     });
-    test('6.2 Changing   value  in the last added Block. Another way Let\'s make a  hundret  ', () => {
+    test('6.3 Changing   value  in the last added Block.will cause  function to return false   \n \t\t\t (for example  in debit) ', () => {
       let tamperedBlock = adaChain.lastBlock().transaction.debit = '-616.66';
       expect(adaChain.isValid()).toBe(false);
     });
@@ -619,13 +619,15 @@ describe('\n\n 5 - 6 - 7  Unit tests  of  Chain class white box testing', () => 
 
 
     });
-    test('7.1 Correctness of the function ', () => {
+
+  describe( ' Baundary Value Analysis tests ', () => {
+    test('7.1 Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)===-634.99', () => {
       expect(adaChain.balance()).toBe(-634.99);
     });
-    test('7.2 Correctness of the function ', () => {
+    test('7.2Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)!==-634.00',() => {
       expect(adaChain.balance()).not.toBe(-635.00);
     });
-    test('7.3 Correctness of the function ', () => {
+    test('7.3 Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)!==-634.98', () => {
       expect(adaChain.balance()).not.toBe(-634.98);
     });
     test('7.4 Correctness of the function adding block with credit 634.99 to make  balance 0', () => {
@@ -633,7 +635,7 @@ describe('\n\n 5 - 6 - 7  Unit tests  of  Chain class white box testing', () => 
       adaChain.addBlock(block7);
       expect(adaChain.balance()).toBe(0);
     });
-
+ });
   });
 });
 
@@ -649,7 +651,7 @@ describe('\n\n 5 - 6 - 7  Unit tests  of  Chain class white box testing', () => 
 describe('\n\n INTEGRATION TESTING mixed white box and black box testing', () => {
 
   //reliability
-  describe('\n 8. System testing. Overal functionality. Trying to break functionality providing acceptable data', () => {
+  describe('\n 8. System testing. Overal functionality. Trying to break functionality providing acceptable data, error guessing ', () => {
     let adaChain;
     beforeEach(() => {
       adaChain = new Chain();
@@ -672,34 +674,38 @@ describe('\n\n INTEGRATION TESTING mixed white box and black box testing', () =>
     test('8.1 Valid blocks in the chain isValid() function should return true', () => {
       expect(adaChain.isValid()).toBe(true);
     });
-    test('8.2 Changing   value  type of transaction  in the 1st added Block  and its hash. Let\'s make a million   ', () => {
+    test('8.2 Changing   value in the  type of transaction  in the 1st added Block  and its hash  will make chain isValid()  false ', () => {
       let tamperedBlock = adaChain.chain[1];
       tamperedBlock.transaction.credit = '1000000.00';
       tamperedBlock.hash = tamperedBlock.calculateHash();
       expect(adaChain.isValid()).not.toBe(true);
     });
-    test('8.3 DANGEROUS !!!Changing   value  type of transaction  in the last added Block  and its hash. Another way Let\'s make a  hundred ', () => {
+    test('8.3 DANGEROUS !!!Changing   value in the  type of transaction  in the last added Block  and its hash  will NOT  make Chain isValid() false ', () => {
       let tamperedBlock = adaChain.lastBlock();
       tamperedBlock.transaction.debit = '-616.12';
       tamperedBlock.hash = tamperedBlock.calculateHash();
       expect(adaChain.isValid()).toBe(true);
     });
-    test('8.4 Balance should not changed after trying to add a faulty block\n  \t\t\t debit out of range, credit out of range etc.. ', () => {
+    test('8.4 Balance should not changed after trying to add a series of  faulty blocks\n  \t\t\t debit out of range, credit out of range etc.. \n \t\t  debit value is out of the range \n \t\t  the same ui \n \t\t  transaction type with typo ', () => {
       let balance = adaChain.balance();
       let block7 = new Block('2021/05/28', { debit: '-25.16' });
       adaChain.addBlock(block7);
       //debit value is out of the range 
       let block8 = new Block('2021/05/28', { debit: '716.16', tid: '412byhbaaa' });
       adaChain.addBlock(block8);
+      //the same ui
       let block9 = new Block('2021/05/28', { credit: '-7.16', tid: '412byhbaaa' });
       adaChain.addBlock(block9);
+      // transaction type with typo
       let block10 = new Block('2021/05/28', { Credit: '6.16', tid: 'uyiubaaa' });
       adaChain.addBlock(block10);
+       // transaction type with typo
       let block11 = new Block('2021/05/28', { Debit: '-0.16', tid: '412byjfhghbaaa' });
       adaChain.addBlock(block11);
       let block12 = new Block('2023/05/28', { Credit: '6.16', tid: 'uyiubcxcxaaa' });
       adaChain.addBlock(block12);
-      let block13 = new Block('2021/05/28', { Debit: '-10000.16', tid: '412byjfhghbaaa' });
+      //transaction out of range
+      let block13 = new Block('2021/05/28', { debit: '-10000.16', tid: 'p412byjfhghbaaa' });
       adaChain.addBlock(block13);
 
       expect(adaChain.balance()).toBe(balance);
@@ -710,6 +716,7 @@ describe('\n\n INTEGRATION TESTING mixed white box and black box testing', () =>
       tamperedBlock.transaction.credit = '1000000.00';
       expect(adaChain.balance()).not.toBe(balance);
     });
+    
     test('8.6 DANGEROUS!! Changing   debit    type of transaction   in the last added Block  and changing a hash. \n \t\t\tAnother way Let\'s make a  hundred   and valid hacked chain', () => {
       let balance = adaChain.balance();
       let tamperedBlock = adaChain.lastBlock();
@@ -720,7 +727,7 @@ describe('\n\n INTEGRATION TESTING mixed white box and black box testing', () =>
 
     });
 
-    test('8.7 DANGEROUS!! Changing   value   type of transaction   in the last added Block  and changing a hash. \n \t\t\tAnother way Let\'s make a  hundred   and valid hacked chain', () => {
+    test('8.7 DANGEROUS!! Changing   value   type of transaction   in the last added Block  and changing a hash. \n \t\t\t will make a  valid chain or hacked chain', () => {
 
       let tamperedBlock = adaChain.lastBlock();
       tamperedBlock.transaction = { debit: '-0.12', tid: 'ff987567aaa' };

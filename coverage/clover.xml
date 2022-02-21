@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1645408728353" clover="3.2.0">
-  <project timestamp="1645408728353" name="All files">
+<coverage generated="1645473339051" clover="3.2.0">
+  <project timestamp="1645473339052" name="All files">
     <metrics statements="84" coveredstatements="84" conditionals="51" coveredconditionals="50" methods="16" coveredmethods="16" elements="151" coveredelements="150" complexity="0" loc="84" ncloc="84" packages="1" files="2" classes="2"/>
     <file name="block.js" path="/home/runner/AdaCoin-Blockchain-Working-Version/adacoin/src/block.js">
       <metrics statements="54" coveredstatements="54" conditionals="39" coveredconditionals="39" methods="10" coveredmethods="10"/>
@@ -35,22 +35,22 @@
       <line num="78" count="30" type="stmt"/>
       <line num="83" count="145" type="stmt"/>
       <line num="88" count="145" type="cond" truecount="6" falsecount="0"/>
-      <line num="90" count="12" type="stmt"/>
-      <line num="92" count="133" type="stmt"/>
-      <line num="97" count="152" type="stmt"/>
-      <line num="98" count="152" type="stmt"/>
-      <line num="100" count="152" type="cond" truecount="2" falsecount="0"/>
+      <line num="90" count="11" type="stmt"/>
+      <line num="92" count="134" type="stmt"/>
+      <line num="97" count="153" type="stmt"/>
+      <line num="98" count="153" type="stmt"/>
+      <line num="100" count="153" type="cond" truecount="2" falsecount="0"/>
       <line num="101" count="74" type="cond" truecount="2" falsecount="0"/>
       <line num="102" count="6" type="stmt"/>
       <line num="104" count="68" type="stmt"/>
       <line num="105" count="68" type="cond" truecount="4" falsecount="0"/>
       <line num="106" count="7" type="stmt"/>
-      <line num="111" count="139" type="cond" truecount="2" falsecount="0"/>
-      <line num="112" count="77" type="cond" truecount="2" falsecount="0"/>
+      <line num="111" count="140" type="cond" truecount="2" falsecount="0"/>
+      <line num="112" count="78" type="cond" truecount="2" falsecount="0"/>
       <line num="113" count="6" type="stmt"/>
-      <line num="115" count="71" type="stmt"/>
-      <line num="116" count="71" type="cond" truecount="4" falsecount="0"/>
-      <line num="117" count="7" type="stmt"/>
+      <line num="115" count="72" type="stmt"/>
+      <line num="116" count="72" type="cond" truecount="4" falsecount="0"/>
+      <line num="117" count="8" type="stmt"/>
       <line num="122" count="126" type="cond" truecount="2" falsecount="0"/>
       <line num="123" count="5" type="stmt"/>
       <line num="125" count="121" type="stmt"/>
