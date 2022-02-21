@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1645408123447" clover="3.2.0">
-  <project timestamp="1645408123447" name="All files">
+<coverage generated="1645408728353" clover="3.2.0">
+  <project timestamp="1645408728353" name="All files">
     <metrics statements="84" coveredstatements="84" conditionals="51" coveredconditionals="50" methods="16" coveredmethods="16" elements="151" coveredelements="150" complexity="0" loc="84" ncloc="84" packages="1" files="2" classes="2"/>
     <file name="block.js" path="/home/runner/AdaCoin-Blockchain-Working-Version/adacoin/src/block.js">
       <metrics statements="54" coveredstatements="54" conditionals="39" coveredconditionals="39" methods="10" coveredmethods="10"/>
