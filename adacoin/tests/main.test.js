@@ -3,7 +3,7 @@ const { Block } = require('../src/block.js');
 
 
 describe('\n\n 0 Properties of JAVASCRIPT - not  included in the test ', () => {
-  describe.skip('\n 0 Checking if  the float variable can hold    money properly', () => {
+  describe('\n 0 Checking if  the float variable can hold    money properly', () => {
 
     /* @) verification 
       method used:
@@ -55,14 +55,28 @@ describe('\n\n 0 Properties of JAVASCRIPT - not  included in the test ', () => {
 
       expect(price1 + price2).toBe(2.04);
     });
-    test('0.7 addition    proving float  can not hold money properly ', () => {
+    test('0.7 addition    proving float  can not hold money properly initialization of Number obj with a string  should do the math', () => {
       let n1 = "1.53";
       let n2 = "0.51";
       let price1 = Number(n1);
       let price2 = Number(n2);
-
       expect(price1 + price2).toBe(2.04);
     });
+     test('0.8 addition    proving float  can not hold money properly  initialization of Number obj with a decimal  should do the math', () => {
+        let price1 = Number(1.53);
+        let price2 = Number(0.51);
+
+        expect(price1 + price2).toBe(2.04);
+      });
+      test('0.9 addition    proving float  can not hold money properly initialization of Number obj with a decimal  should do the math', () => {
+        let n1 = 1.53;
+        let n2 = 0.51;
+         let n3= 2.99;
+        let price1 = Number(n1);
+        let price2 = Number(n2);
+         let price3 = Number(n3);
+        expect(price1 + price2+price3).toBe(5.03);
+      });
   });
 });
 describe('\n\nUNIT TESTS  1 -2 - 3 Block  object  white box testing', () => {
@@ -127,34 +141,34 @@ describe('\n\nUNIT TESTS  1 -2 - 3 Block  object  white box testing', () => {
 
 
   describe('\n\ 2 Correctness and reliability of  isValidTransactionProperties() helper  method', () => {
-describe('negative,  positive test cases, error guessing ', () => {
-    test('2.1 Valid type of transaction >credit< ', () => {
-      let block = new Block('2022/01/01', { credit: '311.00', tid: 'aaga2' });
-      expect(block.isValidTransactionProperties()).toBe(true);
-    });
-    test('2.2 Valid type of transaction >debit< ', () => {
-      let block = new Block('2022/20/16', { debit: '-1.22', tid: 'aagha35' });
-      expect(block.isValidTransactionProperties()).toBe(true);
-    });
+    describe('negative,  positive test cases, error guessing ', () => {
+      test('2.1 Valid type of transaction >credit< ', () => {
+        let block = new Block('2022/01/01', { credit: '311.00', tid: 'aaga2' });
+        expect(block.isValidTransactionProperties()).toBe(true);
+      });
+      test('2.2 Valid type of transaction >debit< ', () => {
+        let block = new Block('2022/20/16', { debit: '-1.22', tid: 'aagha35' });
+        expect(block.isValidTransactionProperties()).toBe(true);
+      });
 
-    test('2.3 Invalid type of transaction >Credit< (Capital letter)', () => {
-      let block = new Block('2021/10/31', { Credit: '51.22', tid: 'hfgaaa' });
-      expect(block.isValidTransactionProperties()).not.toBe(true);
-    });
-    test('2.4 Invalid type of transaction >Debit<  (Capital letter)', () => {
-      let block = new Block('2022/01/15', { Debit: '-33.22', tid: 'aaa' });
-      expect(block.isValidTransactionProperties()).not.toBe(true);
-    });
-    test('2.5 Transactions with  missing type  not allowed ', () => {
-      let block = new Block('2021/05/28', { tid: 'aaa' });
-      expect(block.isValidTransactionProperties()).toBe(false);
-    });
-    test('2.6 Transactions with both  types  not allowed ', () => {
-      let block = new Block('2022/01/15', { debit: '-33.22', credit: '33.56', tid: 'aaa' });
-      expect(block.isValidTransactionProperties()).toBe(false);
-    });
+      test('2.3 Invalid type of transaction >Credit< (Capital letter)', () => {
+        let block = new Block('2021/10/31', { Credit: '51.22', tid: 'hfgaaa' });
+        expect(block.isValidTransactionProperties()).not.toBe(true);
+      });
+      test('2.4 Invalid type of transaction >Debit<  (Capital letter)', () => {
+        let block = new Block('2022/01/15', { Debit: '-33.22', tid: 'aaa' });
+        expect(block.isValidTransactionProperties()).not.toBe(true);
+      });
+      test('2.5 Transactions with  missing type  not allowed ', () => {
+        let block = new Block('2021/05/28', { tid: 'aaa' });
+        expect(block.isValidTransactionProperties()).toBe(false);
+      });
+      test('2.6 Transactions with both  types  not allowed ', () => {
+        let block = new Block('2022/01/15', { debit: '-33.22', credit: '33.56', tid: 'aaa' });
+        expect(block.isValidTransactionProperties()).toBe(false);
+      });
 
-  });
+    });
     /*
      
     Baundary Value Analysis tests 3.1-3.12
@@ -255,232 +269,232 @@ describe('negative,  positive test cases, error guessing ', () => {
         });
 
       });
-       describe('Negative and positive test cases,error guessing', () => {
-      //error guessing
-      test('3.17 Transactions with missing id not allowed  for debit ', () => {
-        let block = new Block('2021/05/28', { debit: '-100.34' });
-        expect(block.isValidTransactionCriterias()).toBe(false);
-      });
-      test('3.18 Transactions with missing id not allowed  for credit ', () => {
-        let block = new Block('2021/05/28', { credit: '7.39' });
-        expect(block.isValidTransactionCriterias()).toBe(false);
-      });
-      test('3.19 Transactions with missing id and missing type  not allowed ', () => {
-        let block = new Block('2021/05/28', {});
-        expect(block.isValidTransactionCriterias()).toBe(false);
-      });
+      describe('Negative and positive test cases,error guessing', () => {
+        //error guessing
+        test('3.17 Transactions with missing id not allowed  for debit ', () => {
+          let block = new Block('2021/05/28', { debit: '-100.34' });
+          expect(block.isValidTransactionCriterias()).toBe(false);
+        });
+        test('3.18 Transactions with missing id not allowed  for credit ', () => {
+          let block = new Block('2021/05/28', { credit: '7.39' });
+          expect(block.isValidTransactionCriterias()).toBe(false);
+        });
+        test('3.19 Transactions with missing id and missing type  not allowed ', () => {
+          let block = new Block('2021/05/28', {});
+          expect(block.isValidTransactionCriterias()).toBe(false);
+        });
 
-      test('3.20 Transactions with integer amount not allowed  for credit ', () => {
-        let block = new Block('2021/05/28', { debit: - 100 });
-        expect(block.isValidTransactionCriterias()).toBe(false);
-      });
-      test('3.21 Transactions with integer amount not allowed  for debit', () => {
-        let block = new Block('2021/05/28', { credit: 7 });
-        expect(block.isValidTransactionCriterias()).toBe(false);
-      });
+        test('3.20 Transactions with integer amount not allowed  for credit ', () => {
+          let block = new Block('2021/05/28', { debit: - 100 });
+          expect(block.isValidTransactionCriterias()).toBe(false);
+        });
+        test('3.21 Transactions with integer amount not allowed  for debit', () => {
+          let block = new Block('2021/05/28', { credit: 7 });
+          expect(block.isValidTransactionCriterias()).toBe(false);
+        });
 
+      });
     });
- });
 
   });
 
 });
 describe('\n\n 4 Integration tests   -4 -', () => {
-describe('\n\n 4 Correctness of the block ', () => {
-  describe('Negative and positive test cases', () => {
-    test('4.1  Today day is  valid', () => {
-      let today = new Date();
-      let block = new Block(today.toLocaleString().slice(0, 9), { credit: '100.13', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(true);
+  describe('\n\n 4 Correctness of the block ', () => {
+    describe('Negative and positive test cases', () => {
+      test('4.1  Today day is  valid', () => {
+        let today = new Date();
+        let block = new Block(today.toLocaleString().slice(0, 9), { credit: '100.13', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+
+      test('4.2  When Date is correct  "2022/02/19" then  valid result', () => {
+        let block = new Block('2022/02/19', { credit: '10.13', tid: 'ayaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+
+
+      test('4.3  Yesterday  day is  valid', () => {
+        let today = new Date();
+        let yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        let block = new Block(yesterday.toLocaleString().slice(0, 9), { debit: '-410.13', tid: 'aya345a' });
+        expect(block.validTransaction()).toBe(true);
+      });
+
+      test('4.4  Tomorrow date is invalid', () => {
+        let today = new Date();
+        let tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        let block = new Block(tomorrow.toLocaleString().slice(0, 9), { credit: '100.13', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+
+      test('4.5  When Date is missing then  invalid result', () => {
+        let block = new Block({ credit: '10.13', tid: 'ayaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+
+      test('4.6  When Date is wrong   "2000/2/31" then  invalid result', () => {
+        let block = new Block("31/2/2000", { credit: '10.53', tid: 'ayaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+      test('4.7  When Date is malformed   "546/rrtyuv0" then  invalid result', () => {
+        let block = new Block("546/rrtyuv0", { credit: '104.13', tid: 'ayaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+
+      test('4.8  When Date is correct  2021/05/28 then  valid result', () => {
+        let block = new Block('2021/05/28', { credit: '10.13', tid: 'ayaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+
+      test('4.9  Valid type of transaction >credit< ', () => {
+        let block = new Block('2022/1/1', { credit: '311.00', tid: 'aaga2' });
+        expect(block.validTransaction()).toBe(true);
+      });
+      test('4.10 Valid type of transaction >debit< ', () => {
+        let block = new Block('2022/2/16', { debit: '-1.22', tid: 'aagha35' });
+        expect(block.validTransaction()).toBe(true);
+      });
+
+      test('4.11 Invalid type of transaction >Credit< (Capital letter)', () => {
+        let block = new Block('2021/10/31', { Credit: '51.22', tid: 'hfgaaa' });
+        expect(block.validTransaction()).not.toBe(true);
+      });
+      test('4.12 Invalid type of transaction >Debit<  (Capital letter)', () => {
+        let block = new Block('2022/1/15', { Debit: '-33.22', tid: 'aaa' });
+        expect(block.validTransaction()).not.toBe(true);
+      });
+      test('4.13 Transactions with  missing type  not allowed ', () => {
+        let block = new Block('2021/05/28', { tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+      test('4.14 Transactions with both  types  not allowed ', () => {
+        let block = new Block('2022/1/15', { debit: '-33.22', credit: '33.56', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+    });
+    describe('Baundary Value Analysis ', () => {
+
+
+      test('4.15 Type:debit values inside the  range <-1000;0) Lower Boundary -LEFT   ', () => {
+        let block = new Block('2021/05/28', { debit: '-1000.01', tid: 'aaa' })
+        expect(block.validTransaction()).toBe(false);
+      });
+
+      test('4.16 Type:debit values inside the  range <-1000;0) Lower Boundary -CENTER   ', () => {
+        let block = new Block('2021/05/28', { debit: '-1000.00', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+      test('4.17 Type:debit values inside the  range <-1000;0) Lower Boundary -RIGHT ', () => {
+        let block = new Block('2021/05/28', { debit: '-999.99', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+
+
+
+      test('4.18 Type:debit values inside the  range <-1000;0) HIGHER Boundary -LEFT   ', () => {
+        let block = new Block('2021/05/28', { debit: -0.01, tid: 'aaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+      //zero should be rejected
+      test('4.19 Type:debit values inside the  range <-1000;0) HIGHER Boundary -CENTER  ', () => {
+        let block = new Block('2021/05/28', { debit: '0.00', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+      test('4.20 Type:debit values inside the  range <-1000;0) HIGHER Boundary -RIGHT  ', () => {
+        let block = new Block('2021/05/28', { debit: '0.01', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+
+
+
+
+      test('4.21 Type:credit values inside the  range (0;1000> Lower Boundary -LEFT   ', () => {
+        let block = new Block('2021/05/28', { credit: '-0.01', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+      //0 should be rejected 
+      test('4.22 Type:credit values inside the  range (0;1000> Lower Boundary -CENTER   ', () => {
+        let block = new Block('2021/05/28', { credit: '0.00', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+      test('4.23 Type:credit values inside the  range (0;1000> Lower Boundary -RIGHT ', () => {
+        let block = new Block('2021/05/28', { credit: '0.01', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+
+
+
+      test('4.24 Type:credit values inside the  range (0;1000> HIGHER Boundary -LEFT   ', () => {
+        let block = new Block('2021/05/28', { credit: '999.99', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+      test('4.25 Tpe:credit values inside the  range (0;1000> HIGHER Boundary -CENTER  ', () => {
+        let block = new Block('2021/05/28', { credit: '1000.00', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(true);
+      });
+      test('4.26 Type:credit values inside the  range (0;1000> HIGHER Boundary -RIGHT  ', () => {
+        let block = new Block('2021/05/28', { credit: '1000.01', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
     });
 
-    test('4.2  When Date is correct  "2022/02/19" then  valid result', () => {
-      let block = new Block('2022/02/19', { credit: '10.13', tid: 'ayaa' });
-      expect(block.validTransaction()).toBe(true);
+    //Baundary Value Analysis tests for two decimal places
+    describe('Baundary Value Analysis', () => {
+      test('4.27 Decimal places exactly  two  for credit .higher boundary ', () => {
+        let block = new Block('2021/05/28', { credit: '67.013,', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+
+      test('4.28 Decimal places exactly  two  for debit.higher boundary ', () => {
+        let block = new Block('2021/05/28', { debit: '-77.013', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+
+      test('4.29 Decimal places exactly  two  for credit .lower boundary ', () => {
+        let block = new Block('2021/05/28', { credit: '100.2', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+
+      test('4.30 Dcimal places exactly  two  for debit  .lower boundary ', () => {
+        let block = new Block('2021/05/28', { debit: '-100.3', tid: 'aaa' });
+        expect(block.validTransaction()).toBe(false);
+      });
+
+    });
+    //error guessing
+    describe('error guessing', () => {
+      test('4.31 Transactions with missing id not allowed  for debit ', () => {
+        let block = new Block('2021/05/28', { debit: '-100.34' });
+        expect(block.validTransaction()).toBe(false);
+      });
+      test('4.32 Transactions with missing id not allowed  for credit ', () => {
+        let block = new Block('2021/05/28', { credit: '7.39' });
+        expect(block.validTransaction()).toBe(false);
+      });
+      test('4.33 Transactions with missing id and missing type  not allowed ', () => {
+        let block = new Block('2021/05/28', {});
+        expect(block.validTransaction()).toBe(false);
+      });
+
+      test('4.34 Transactions with integer amount not allowed  for credit ', () => {
+        let block = new Block('2021/05/28', { debit: - 100 });
+        expect(block.validTransaction()).toBe(false);
+      });
+      test('4.35 Transactions with integer amount not allowed  for debit', () => {
+        let block = new Block('2021/05/28', { credit: 7 });
+        expect(block.validTransaction()).toBe(false);
+      });
+      test('4.36 Transactions with no data at all', () => {
+        let block = new Block();
+        expect(block.validTransaction()).toBe(false);
+      });
+
     });
 
-
-    test('4.3  Yesterday  day is  valid', () => {
-      let today = new Date();
-      let yesterday = new Date(today);
-      yesterday.setDate(yesterday.getDate() - 1);
-      let block = new Block(yesterday.toLocaleString().slice(0, 9), { debit: '-410.13', tid: 'aya345a' });
-      expect(block.validTransaction()).toBe(true);
-    });
-
-    test('4.4  Tomorrow date is invalid', () => {
-      let today = new Date();
-      let tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      let block = new Block(tomorrow.toLocaleString().slice(0, 9), { credit: '100.13', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-
-    test('4.5  When Date is missing then  invalid result', () => {
-      let block = new Block({ credit: '10.13', tid: 'ayaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-
-    test('4.6  When Date is wrong   "2000/2/31" then  invalid result', () => {
-      let block = new Block("31/2/2000", { credit: '10.53', tid: 'ayaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-    test('4.7  When Date is malformed   "546/rrtyuv0" then  invalid result', () => {
-      let block = new Block("546/rrtyuv0", { credit: '104.13', tid: 'ayaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-
-    test('4.8  When Date is correct  2021/05/28 then  valid result', () => {
-      let block = new Block('2021/05/28', { credit: '10.13', tid: 'ayaa' });
-      expect(block.validTransaction()).toBe(true);
-    });
-
-    test('4.9  Valid type of transaction >credit< ', () => {
-      let block = new Block('2022/1/1', { credit: '311.00', tid: 'aaga2' });
-      expect(block.validTransaction()).toBe(true);
-    });
-    test('4.10 Valid type of transaction >debit< ', () => {
-      let block = new Block('2022/2/16', { debit: '-1.22', tid: 'aagha35' });
-      expect(block.validTransaction()).toBe(true);
-    });
-
-    test('4.11 Invalid type of transaction >Credit< (Capital letter)', () => {
-      let block = new Block('2021/10/31', { Credit: '51.22', tid: 'hfgaaa' });
-      expect(block.validTransaction()).not.toBe(true);
-    });
-    test('4.12 Invalid type of transaction >Debit<  (Capital letter)', () => {
-      let block = new Block('2022/1/15', { Debit: '-33.22', tid: 'aaa' });
-      expect(block.validTransaction()).not.toBe(true);
-    });
-    test('4.13 Transactions with  missing type  not allowed ', () => {
-      let block = new Block('2021/05/28', { tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-    test('4.14 Transactions with both  types  not allowed ', () => {
-      let block = new Block('2022/1/15', { debit: '-33.22', credit: '33.56', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
   });
-  describe('Baundary Value Analysis ', () => {
-
-
-    test('4.15 Type:debit values inside the  range <-1000;0) Lower Boundary -LEFT   ', () => {
-      let block = new Block('2021/05/28', { debit: '-1000.01', tid: 'aaa' })
-      expect(block.validTransaction()).toBe(false);
-    });
-
-    test('4.16 Type:debit values inside the  range <-1000;0) Lower Boundary -CENTER   ', () => {
-      let block = new Block('2021/05/28', { debit: '-1000.00', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(true);
-    });
-    test('4.17 Type:debit values inside the  range <-1000;0) Lower Boundary -RIGHT ', () => {
-      let block = new Block('2021/05/28', { debit: '-999.99', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(true);
-    });
-
-
-
-    test('4.18 Type:debit values inside the  range <-1000;0) HIGHER Boundary -LEFT   ', () => {
-      let block = new Block('2021/05/28', { debit: -0.01, tid: 'aaa' });
-      expect(block.validTransaction()).toBe(true);
-    });
-    //zero should be rejected
-    test('4.19 Type:debit values inside the  range <-1000;0) HIGHER Boundary -CENTER  ', () => {
-      let block = new Block('2021/05/28', { debit: '0.00', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-    test('4.20 Type:debit values inside the  range <-1000;0) HIGHER Boundary -RIGHT  ', () => {
-      let block = new Block('2021/05/28', { debit: '0.01', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-
-
-
-
-    test('4.21 Type:credit values inside the  range (0;1000> Lower Boundary -LEFT   ', () => {
-      let block = new Block('2021/05/28', { credit: '-0.01', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-    //0 should be rejected 
-    test('4.22 Type:credit values inside the  range (0;1000> Lower Boundary -CENTER   ', () => {
-      let block = new Block('2021/05/28', { credit: '0.00', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-    test('4.23 Type:credit values inside the  range (0;1000> Lower Boundary -RIGHT ', () => {
-      let block = new Block('2021/05/28', { credit: '0.01', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(true);
-    });
-
-
-
-    test('4.24 Type:credit values inside the  range (0;1000> HIGHER Boundary -LEFT   ', () => {
-      let block = new Block('2021/05/28', { credit: '999.99', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(true);
-    });
-    test('4.25 Tpe:credit values inside the  range (0;1000> HIGHER Boundary -CENTER  ', () => {
-      let block = new Block('2021/05/28', { credit: '1000.00', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(true);
-    });
-    test('4.26 Type:credit values inside the  range (0;1000> HIGHER Boundary -RIGHT  ', () => {
-      let block = new Block('2021/05/28', { credit: '1000.01', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-  });
-
-  //Baundary Value Analysis tests for two decimal places
-  describe('Baundary Value Analysis', () => {
-    test('4.27 Decimal places exactly  two  for credit .higher boundary ', () => {
-      let block = new Block('2021/05/28', { credit: '67.013,', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-
-    test('4.28 Decimal places exactly  two  for debit.higher boundary ', () => {
-      let block = new Block('2021/05/28', { debit: '-77.013', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-
-    test('4.29 Decimal places exactly  two  for credit .lower boundary ', () => {
-      let block = new Block('2021/05/28', { credit: '100.2', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-
-    test('4.30 Dcimal places exactly  two  for debit  .lower boundary ', () => {
-      let block = new Block('2021/05/28', { debit: '-100.3', tid: 'aaa' });
-      expect(block.validTransaction()).toBe(false);
-    });
-
-  });
-  //error guessing
-  describe('error guessing', () => {
-    test('4.31 Transactions with missing id not allowed  for debit ', () => {
-      let block = new Block('2021/05/28', { debit: '-100.34' });
-      expect(block.validTransaction()).toBe(false);
-    });
-    test('4.32 Transactions with missing id not allowed  for credit ', () => {
-      let block = new Block('2021/05/28', { credit: '7.39' });
-      expect(block.validTransaction()).toBe(false);
-    });
-    test('4.33 Transactions with missing id and missing type  not allowed ', () => {
-      let block = new Block('2021/05/28', {});
-      expect(block.validTransaction()).toBe(false);
-    });
-
-    test('4.34 Transactions with integer amount not allowed  for credit ', () => {
-      let block = new Block('2021/05/28', { debit: - 100 });
-      expect(block.validTransaction()).toBe(false);
-    });
-    test('4.35 Transactions with integer amount not allowed  for debit', () => {
-      let block = new Block('2021/05/28', { credit: 7 });
-      expect(block.validTransaction()).toBe(false);
-    });
-    test('4.36 Transactions with no data at all', () => {
-      let block = new Block();
-      expect(block.validTransaction()).toBe(false);
-    });
-
-  });
-
- });
 
 });
 
@@ -620,22 +634,22 @@ describe('\n\n 5 - 6 - 7  Unit tests  of  Chain class white box testing', () => 
 
     });
 
-  describe( ' Baundary Value Analysis tests ', () => {
-    test('7.1 Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)===-634.99', () => {
-      expect(adaChain.balance()).toBe(-634.99);
+    describe(' Baundary Value Analysis tests ', () => {
+      test('7.1 Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)===-634.99', () => {
+        expect(adaChain.balance()).toBe(-634.99);
+      });
+      test('7.2Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)!==-634.00', () => {
+        expect(adaChain.balance()).not.toBe(-635.00);
+      });
+      test('7.3 Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)!==-634.98', () => {
+        expect(adaChain.balance()).not.toBe(-634.98);
+      });
+      test('7.4 Correctness of the function adding block with credit 634.99 to make  balance 0', () => {
+        let block7 = new Block('2021/05/29', { credit: '634.99', tid: '412bytbaaa' });
+        adaChain.addBlock(block7);
+        expect(adaChain.balance()).toBe(0);
+      });
     });
-    test('7.2Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)!==-634.00',() => {
-      expect(adaChain.balance()).not.toBe(-635.00);
-    });
-    test('7.3 Correctness of the function (81.17-76.66-176.66+176.66+76.66-716.16)!==-634.98', () => {
-      expect(adaChain.balance()).not.toBe(-634.98);
-    });
-    test('7.4 Correctness of the function adding block with credit 634.99 to make  balance 0', () => {
-      let block7 = new Block('2021/05/29', { credit: '634.99', tid: '412bytbaaa' });
-      adaChain.addBlock(block7);
-      expect(adaChain.balance()).toBe(0);
-    });
- });
   });
 });
 
@@ -699,7 +713,7 @@ describe('\n\n INTEGRATION TESTING mixed white box and black box testing', () =>
       // transaction type with typo
       let block10 = new Block('2021/05/28', { Credit: '6.16', tid: 'uyiubaaa' });
       adaChain.addBlock(block10);
-       // transaction type with typo
+      // transaction type with typo
       let block11 = new Block('2021/05/28', { Debit: '-0.16', tid: '412byjfhghbaaa' });
       adaChain.addBlock(block11);
       let block12 = new Block('2023/05/28', { Credit: '6.16', tid: 'uyiubcxcxaaa' });
@@ -716,7 +730,7 @@ describe('\n\n INTEGRATION TESTING mixed white box and black box testing', () =>
       tamperedBlock.transaction.credit = '1000000.00';
       expect(adaChain.balance()).not.toBe(balance);
     });
-    
+
     test('8.6 DANGEROUS!! Changing   debit    type of transaction   in the last added Block  and changing a hash. \n \t\t\tAnother way Let\'s make a  hundred   and valid hacked chain', () => {
       let balance = adaChain.balance();
       let tamperedBlock = adaChain.lastBlock();
